@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
+    public GameObject mainCamera;
+
     public float speed = 5f; // Скорость движения
     public float jumpForce = 5f; // Сила прыжка
     public float mouseSensitivity = 100f; // Чувствительность мыши
@@ -32,7 +34,7 @@ public class CharacterController : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        movement = Camera.main.transform.TransformDirection(movement); // Относительно направления камеры
+        movement = mainCamera.transform.TransformDirection(movement); // Относительно направления камеры
         movement.y = 0; // Убираем вертикальное движение
 
         transform.Translate(movement * speed * Time.deltaTime, Space.World); // Перемещение с использованием Transform.Translate
@@ -55,7 +57,7 @@ public class CharacterController : MonoBehaviour
         rotationX = Mathf.Clamp(rotationX, -verticalRotationLimit, verticalRotationLimit);
         rotationY += mouseX;
 
-        Camera.main.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f); // Вращение камеры
+        mainCamera.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f); // Вращение камеры
         transform.rotation = Quaternion.Euler(0f, rotationY, 0f); // Вращение персонажа
     }
 
